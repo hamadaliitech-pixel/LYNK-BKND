@@ -20,3 +20,7 @@ app.use(cookieParser());
 app.use("/api/auth",Authrouter)
 
 module.exports = app;
+
+app.get("/", (req, res) => {
+  res.send("Lynk Backend is running!");
+});
