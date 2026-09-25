@@ -18,9 +18,8 @@ app.use(cookieParser());
 
 // Use routes
 app.use("/api/auth",Authrouter)
-
-module.exports = app;
-
 app.get("/", (req, res) => {
   res.send("Lynk Backend is running!");
 });
+
+module.exports = app;
