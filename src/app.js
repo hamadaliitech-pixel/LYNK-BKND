@@ -8,7 +8,7 @@ const app = express();
 
 // Allow frontend communication (cross-origin requests)
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "https://lynk-inky.vercel.app",
   credentials: true
 }));
 
