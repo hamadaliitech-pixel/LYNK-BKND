@@ -87,7 +87,12 @@ async function LoginUser(req, res) {
   });
 }
 async function LogoutUser(req, res) {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/"
+  });
   res.status(200).json({ message: "User logout successfully!" });
 }
 const Dashboard = async (req, res) => {

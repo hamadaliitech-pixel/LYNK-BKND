@@ -5,7 +5,7 @@ const ValidationMiddleware = require("../Middleware/validation.middleware.js");
 
 const router = express.Router();
 router.post("/login", UserControllerRegister.LoginUser);
-router.post("/logout",AuthMiddleware.Authuser,UserControllerRegister.LogoutUser);
+router.post("/logout",UserControllerRegister.LogoutUser);
 router.get(
   "/dashboard",
   AuthMiddleware.Authuser,

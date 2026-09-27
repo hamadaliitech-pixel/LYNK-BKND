@@ -12,7 +12,7 @@ const allowedOrigins = [
 ];
 // Allow frontend communication (cross-origin requests)
 app.use(cors({
-  origin: "https://lynk-inky.vercel.app",
+  origin: allowedOrigins,
   credentials: true
 }));
 
