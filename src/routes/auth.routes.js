@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/login", UserControllerRegister.LoginUser);
 router.post("/logout",AuthMiddleware.Authuser,UserControllerRegister.LogoutUser);
 router.get(
-  "/dashboard",
+  "/Dashboard",
   AuthMiddleware.Authuser,
   UserControllerRegister.Dashboard
 );
