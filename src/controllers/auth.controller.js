@@ -21,6 +21,7 @@ async function Register(req, res) {
     email,
     password: hash,
   });
+  console.log("USER CREATED:", user._id, user.email);
 
   //Creating token
   const token = jwt.sign(
