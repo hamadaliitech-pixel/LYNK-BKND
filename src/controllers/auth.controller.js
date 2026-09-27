@@ -75,6 +75,7 @@ async function LoginUser(req, res) {
   secure: true,
   sameSite: "none",
   path: "/",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
 });
 
   res.status(200).json({
