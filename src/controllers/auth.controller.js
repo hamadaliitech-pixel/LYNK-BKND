@@ -123,7 +123,7 @@ async function ForgotPassword(req, res) {
     await user.save();
 
     // Reset link
-    const resetURL = `http://lynk-inky.vercel.app:5173/reset-password/${resetToken}`;
+    const resetURL = `http://lynk-inky.vercel.app/reset-password/${resetToken}`;
 
     // Send email
     await transporter.sendMail({
