@@ -34,6 +34,7 @@ async function Register(req, res) {
   httpOnly: true,
   secure: true,
   sameSite: "none",
+  path: "/"
 });
 
   res.status(200).json({
@@ -73,6 +74,7 @@ async function LoginUser(req, res) {
   httpOnly: true,
   secure: true,
   sameSite: "none",
+  path: "/",
 });
 
   res.status(200).json({

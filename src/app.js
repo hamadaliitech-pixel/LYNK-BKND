@@ -6,6 +6,10 @@ require('dotenv').config();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://lynk-inky.vercel.app"
+];
 // Allow frontend communication (cross-origin requests)
 app.use(cors({
   origin: "https://lynk-inky.vercel.app",
