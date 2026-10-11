@@ -146,8 +146,8 @@ async function forgotPassword(req, res) {
 
     await user.save();
 
-    // Raw token goes into the email
-    const resetURL = `http://localhost:5173/reset-password/${resetToken}`;
+    const frontendBaseUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const resetURL = `${frontendBaseUrl}/reset-password/${resetToken}`;
 
     await transporter.sendMail({
       from: `"LYNK Support" <${process.env.EMAIL_USER}>`,

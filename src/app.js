@@ -1,7 +1,7 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const AuthRouter = require('./routes/auth.routes.js')
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const AuthRouter = require("./routes/auth.routes.js");
 
 const app = express();
 
@@ -10,11 +10,14 @@ app.use(express.json());
 // Parse Cookie headers and expose cookies on req.cookies.
 app.use(cookieParser());
 // Allow cross-origin requests from frontend clients.
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
 
-app.use("/api/auth",AuthRouter)
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://lynk-nine-omega.vercel.app"],
+    credentials: true,
+  }),
+);
+
+app.use("/api/auth", AuthRouter);
 
 module.exports = app;
