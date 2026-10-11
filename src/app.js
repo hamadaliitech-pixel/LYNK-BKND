@@ -11,12 +11,14 @@ app.use(express.json());
 app.use(cookieParser());
 // Allow cross-origin requests from frontend clients.
 
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://lynk-nine-omega.vercel.app"],
-    credentials: true,
-  }),
-);
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://lynk-q2k0elcvh-acme-523c.vercel.app",
+    "https://lynk-nine-omega.vercel.app",
+  ],
+  credentials: true,
+}));
 
 app.use("/api/auth", AuthRouter);
 
