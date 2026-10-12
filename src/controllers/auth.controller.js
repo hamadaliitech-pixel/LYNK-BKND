@@ -51,8 +51,9 @@ async function SignUp(req, res) {
     const token = await jwt.sign({ id: user._id }, process.env.JWTSECRET);
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
-      secure: false,
+      secure: true,
+      sameSite: "none",
+      path: "/",
     });
 
     return res.status(201).json({
@@ -93,11 +94,11 @@ async function Loginuser(req, res) {
       },
       process.env.JWTSECRET,
     );
-
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
-      secure: false,
+      secure: true,
+      sameSite: "none",
+      path: "/",
     });
 
     res.status(200).json({
@@ -146,7 +147,7 @@ async function forgotPassword(req, res) {
 
     await user.save();
 
-    const frontendBaseUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const frontendBaseUrl = process.env.FRONTEND_URL || "http://localhost:5173";
     const resetURL = `${frontendBaseUrl}/reset-password/${resetToken}`;
 
     await transporter.sendMail({
