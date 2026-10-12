@@ -8,7 +8,6 @@ const app = express();
 // Parse application/json request bodies into req.body.
 app.use(express.json());
 // Parse Cookie headers and expose cookies on req.cookies.
-app.use(cookieParser());
 // Allow cross-origin requests from frontend clients.
 
 app.use(cors({
@@ -20,6 +19,7 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use(cookieParser());
 app.use("/api/auth", AuthRouter);
 
 module.exports = app;
