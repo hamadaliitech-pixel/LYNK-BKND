@@ -19,10 +19,10 @@ async function SignUp(req, res) {
   try {
     if (!username || !email || !password) {
       return res
-        .status(400)
-        .json({ message: "username, email and password are required" });
+      .status(400)
+      .json({ message: "username, email and password are required" });
     }
-
+    
     const existing = await usermodel.findOne({
       $or: [{ username }, { email }],
     });
@@ -31,14 +31,14 @@ async function SignUp(req, res) {
         return res
           .status(409)
           .json({ message: "Username already exists", field: "username" });
-      }
-      if (existing.email === email) {
-        return res
+        }
+        if (existing.email === email) {
+          return res
           .status(409)
           .json({ message: "Email already exists", field: "email" });
+        }
+        return res.status(409).json({ message: "User already exists" });
       }
-      return res.status(409).json({ message: "User already exists" });
-    }
     const hash = await bcrypt.hash(password, 10); //hashing pw
 
     const user = await usermodel.create({
@@ -70,6 +70,15 @@ async function SignUp(req, res) {
   }
 }
 
+// Keep cookieOptions defined ONCE, outside both functions
+const cookieOptions = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  path: "/",
+};
+
+
 async function Loginuser(req, res) {
   const { username, email, password } = req.body;
 
@@ -79,29 +88,31 @@ async function Loginuser(req, res) {
     });
 
     if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({
+        message: "Invalid credentials",
+      });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      user.password
+    );
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({
+        message: "Invalid credentials",
+      });
     }
 
     const token = jwt.sign(
-      {
-        id: user._id,
-      },
+      { id: user._id },
       process.env.JWTSECRET,
+      { expiresIn: "1d" }
     );
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      path: "/",
-    });
 
-    res.status(200).json({
+    res.cookie("token", token, cookieOptions);
+
+    return res.status(200).json({
       message: "user login successfully",
       user: {
         id: user._id,
@@ -111,14 +122,20 @@ async function Loginuser(req, res) {
       },
     });
   } catch (error) {
-    console.error("Register error:", error.message);
-    return res.status(403).json({ message: "Unable to login user" });
+    console.error("Login error:", error.message);
+
+    return res.status(500).json({
+      message: "Unable to login user",
+    });
   }
 }
 
 async function Logoutuser(req, res) {
-  (res.clearCookie("token"),
-    res.status(200).json({ message: "Logout successfully" }));
+  res.clearCookie("token", cookieOptions);
+
+  return res.status(200).json({
+    message: "Logout successfully",
+  });
 }
 
 async function forgotPassword(req, res) {

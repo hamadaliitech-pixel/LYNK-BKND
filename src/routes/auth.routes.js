@@ -12,10 +12,16 @@ router.post('/Logout',userAuthcontroller.Logoutuser)
 router.post("/forgot-password", userAuthcontroller.forgotPassword);
 router.post("/reset-password/:token", userAuthcontroller.resetPassword);
 
+router.get("/check", authMiddleware, (req, res) => {
+  res.status(200).json({ authenticated: true });
+});
+
 router.post('/Lynks', authMiddleware, userProfilecontoller.Lynk)
 router.get('/getLynk', authMiddleware, userProfilecontoller.getLynk)
 router.delete('/Lynks/:id', authMiddleware, userProfilecontoller.deleteLynk)
 router.post('/profile/image',upload.single('Profileimage'),authMiddleware,userProfilecontoller.uploadProfileImage)
+
+
 
 
 module.exports = router
