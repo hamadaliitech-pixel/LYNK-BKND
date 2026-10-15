@@ -49,12 +49,7 @@ async function SignUp(req, res) {
     console.log(user);
 
     const token = await jwt.sign({ id: user._id }, process.env.JWTSECRET);
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      path: "/",
-    });
+    res.cookie("token", token, cookieOptions);
 
     return res.status(201).json({
       message: "user register successfully",
@@ -71,10 +66,12 @@ async function SignUp(req, res) {
 }
 
 // Keep cookieOptions defined ONCE, outside both functions
+const isProduction = process.env.NODE_ENV === "production" || process.env.FRONTEND_URL?.startsWith("https://");
+
 const cookieOptions = {
   httpOnly: true,
-  secure: true,
-  sameSite: "none",
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
   path: "/",
 };
 
